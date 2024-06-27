@@ -93,11 +93,14 @@ WSGI_APPLICATION = 'Mafia.wsgi.application'
 #     )
 # }
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://mafia_rag4_user:mwi4DMO5vGMiU16l1AYqkZIz7AjMxg4j@dpg-cpuop75ds78s73e1nkvg-a.singapore-postgres.render.com/mafia_rag4',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "mafia_rag4",
+        'USER': "mafia_rag4_user",
+        'PASSWORD': "mwi4DMO5vGMiU16l1AYqkZIz7AjMxg4j",
+        'HOST': "dpg-cpuop75ds78s73e1nkvg-a",
+        'PORT': '5432',
+    }
 }
 
 
