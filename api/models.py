@@ -26,7 +26,7 @@ class Room(models.Model):
 
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=20, unique=True)
-    password = models.CharField(max_length=20, default='123')
+    password = models.CharField(max_length=100, default='123')
     color = models.CharField(max_length=20)
     room = models.ForeignKey(Room, null=True, blank=True, on_delete=models.SET_NULL, related_name='users')
     host = models.BooleanField(default=False)
