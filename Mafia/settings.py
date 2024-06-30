@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'Mafia.wsgi.application'
 # Database  ddf
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 # DATABASES = {
@@ -92,16 +92,16 @@ WSGI_APPLICATION = 'Mafia.wsgi.application'
 #         conn_max_age=600
 #     )
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "mafia_rag4",
-        'USER': "mafia_rag4_user",
-        'PASSWORD': "mwi4DMO5vGMiU16l1AYqkZIz7AjMxg4j",
-        'HOST': "dpg-cpuop75ds78s73e1nkvg-a",
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': "mafia_rag4",
+#         'USER': "mafia_rag4_user",
+#         'PASSWORD': "mwi4DMO5vGMiU16l1AYqkZIz7AjMxg4j",
+#         'HOST': "dpg-cpuop75ds78s73e1nkvg-a",
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
