@@ -4,10 +4,10 @@ from .models import *
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('color', 'room', 'host', 'joined_at')}),
+        (None, {'fields': ( 'color', 'room', 'host', 'joined_at')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('username', 'password', 'color')}),
+        (None, {'fields': ('unique_code','username', 'password', 'color')}),
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)

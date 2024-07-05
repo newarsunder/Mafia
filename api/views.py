@@ -17,16 +17,16 @@ def signup(request):
     try:
         username = request.data.get('username')
         color = request.data.get('color')
-        user = CustomUser.objects.filter(username=username).first()
-        if user:
-            login(request, user)
-            return Response({'data': [], 'code': 200, 'message': "Already exists!" })
-        else:
-            user = CustomUser.objects.create(username=username, color=color)
-            user.room = None
-            user.save()
-            login(request, user)
-            return Response({'data': [], 'code': 200, 'message': "User created!" })
+        # user = CustomUser.objects.filter(username=username).first()
+        # if CustomUser.objects.filter(unique_code=user.unique_code).first():
+        #     login(request, user)
+        #     return Response({'data': [], 'code': 200, 'message': "Already exists!" })
+        # else:
+        user = CustomUser.objects.create(username=username, color=color)
+        user.room = None
+        user.save()
+        login(request, user)
+        return Response({'data': [], 'code': 200, 'message': "User created!" })
     except Exception as e:
         return Response({'data': [], 'code': 500, 'message': "Internal Server Error" })
 
@@ -65,6 +65,13 @@ def join_room(request):
         code = str(request.GET.get('code')).upper()
         room = Room.objects.filter(code=code).first()
         if room:
+            joined_people = CustomUser.objects.filter(room = room)
+            if len(joined_people) >= room.max_capacity:
+                return Response({'data':[], 'code':400, 'message':"Room is full!" })
+            for i in joined_people:
+                if i.username == user.username:
+                    user.delete()
+                    return Response({'data':[], 'code':400, 'message':"There is already someone joined with this name"})
             user.room = room  
             user.joined_at = timezone.now()
             user.save()
@@ -83,9 +90,11 @@ def leave_room(request):
         user.room = None
         user.save()
         remaining_people = CustomUser.objects.filter(room = room).order_by('joined_at')
-        new_host = remaining_people[0]
-        new_host.host = True
-        new_host.save()
+        if remaining_people:
+            new_host = remaining_people[0]
+            new_host.host = True
+            new_host.save()
+        user.delete()   
         return Response({'data':[], 'code':200, 'message':"Left the Room successfully" })
     except:
         return Response({'data':[], 'code':500, 'message':"Internal Server Error" })

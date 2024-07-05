@@ -1,6 +1,6 @@
 from typing import Any
 from django.db import models
-import random, string
+import random, string, uuid
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
@@ -25,11 +25,14 @@ class Room(models.Model):
         return self.name
 
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=20, unique=True)
+    unique_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    username = models.CharField(max_length=20, unique=False)
     password = models.CharField(max_length=100, default='123')
     color = models.CharField(max_length=20)
     room = models.ForeignKey(Room, null=True, blank=True, on_delete=models.SET_NULL, related_name='users')
     host = models.BooleanField(default=False)
     joined_at = models.DateTimeField(null=True, blank=True)
+    USERNAME_FIELD = 'unique_code'
+    REQUIRED_FIELDS = ['username']
     def __str__(self):
-        return self.username
+        return self.color
